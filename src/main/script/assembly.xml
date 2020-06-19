@@ -12,7 +12,7 @@
 			<includes>
 				<include>io.netty:netty-all</include>
 				<include>com.foxinmy:weixin4j-server</include>
-				<include>com.foxinmy:weixin4j-example</include>
+				<include>com.timwang:timwang-weixin</include>
 			</includes>
 			<useProjectArtifact>true</useProjectArtifact>
 			<outputDirectory>/lib</outputDirectory>

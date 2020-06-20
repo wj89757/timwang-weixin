@@ -44,6 +44,11 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<dependency>
+			<groupId>com.timwang</groupId>
+			<artifactId>timwang-weixin-api</artifactId>
+			<version>${revision}</version>
+		</dependency>
 		<!-- 微信公众平台 -->
 		<dependency>
 			<groupId>com.foxinmy</groupId>

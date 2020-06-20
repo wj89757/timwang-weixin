@@ -23,11 +23,11 @@ public final class Weixin4jServerStartup {
 	 * 明文模式:String aesToken = ""; 密文模式:AesToken aesToken = new
 	 * AesToken("公众号appid", "公众号token","公众号加密/解密消息的密钥");
 	 */
-	private static String aesToken = "weixin";
+	private static String AES_TOKEN = "weixin";
 	/**
 	 * 处理微信消息的全限包名(也可通过addHandler方式一个一个添加)
 	 */
-	private static String handlerPackage = "com.timwang.weixin.zls.server.handler";
+	private static String HANDLER_PACKAGE = "com.timwang.weixin.zls.server.handler";
 
 	/**
 	 * 入口函数 可使用assembly插件打成可执行zip包:https://github.com/foxinmy/weixin4j/wiki/
@@ -36,8 +36,8 @@ public final class Weixin4jServerStartup {
 	 * @param args
 	 */
 	public static void main(String[] args){
-		new WeixinServerBootstrap(new AesToken("wx0d7d983e3c4b1735", aesToken, "CILRMIWizRVfxkTIvSnlJYEooBy8DCE17GPs92LJWmr")) // 指定开发者token信息。
-				.handlerPackagesToScan(handlerPackage) // 扫描处理消息的包。
+		new WeixinServerBootstrap(new AesToken("wx0d7d983e3c4b1735", AES_TOKEN, "CILRMIWizRVfxkTIvSnlJYEooBy8DCE17GPs92LJWmr")) // 指定开发者token信息。
+				.handlerPackagesToScan(HANDLER_PACKAGE) // 扫描处理消息的包。
 				.addHandler(DebugMessageHandler.global) // 当没有匹配到消息处理时输出调试信息，开发环境打开。
 				.openAlwaysResponse() // 当没有匹配到消息处理时输出空白回复(公众号不会出现「该公众号无法提供服务的提示」)，正式环境打开。
 				.startup(port); // 绑定服务的端口号，即对外暴露(微信服务器URL地址)的服务端口。

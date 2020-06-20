@@ -1,5 +1,9 @@
 package com.timwang.weixin.zls.server.handler;
 
+import com.timwang.weixin.zls.util.JsonUtils;
+import com.timwang.weixin.zls.util.NlpTextChatUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.foxinmy.weixin4j.handler.MessageHandlerAdapter;
@@ -18,8 +22,12 @@ import com.foxinmy.weixin4j.response.WeixinResponse;
  */
 @Component
 public class TextMessageHandler extends MessageHandlerAdapter<TextMessage> {
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Override
     public WeixinResponse doHandle0(TextMessage message) {
-        return new TextResponse("收到了文本消息");
+        logger.info("message info = " + JsonUtils.toJson(message));
+        String aiAnswer = NlpTextChatUtil.getAiAnswer(message.getContent());
+        return new TextResponse(aiAnswer);
     }
 }

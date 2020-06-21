@@ -10,6 +10,7 @@ import java.util.Date;
 public class OutApiList implements Serializable {
     private Integer id;
     private String name;
+    private String matchName;
     private String linkUrl;
     private Integer status;
     private Date createTime;
@@ -28,6 +29,14 @@ public class OutApiList implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMatchName() {
+        return matchName;
+    }
+
+    public void setMatchName(String matchName) {
+        this.matchName = matchName;
     }
 
     public String getLinkUrl() {

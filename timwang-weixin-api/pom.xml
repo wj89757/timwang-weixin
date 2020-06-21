@@ -28,7 +28,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.timwang.weixin.zls.WeixinApiApplication</mainClass>
+                    <mainClass>com.timwang.weixin.zls.api.WeixinApiApplication</mainClass>
                     <classifier>exec</classifier>
                 </configuration>
             </plugin>

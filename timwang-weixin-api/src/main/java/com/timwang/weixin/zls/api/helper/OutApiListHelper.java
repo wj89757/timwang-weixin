@@ -7,6 +7,7 @@ import com.timwang.weixin.zls.api.dto.OutApiListDTO;
 import com.timwang.weixin.zls.api.model.OutApiList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,6 +24,17 @@ public class OutApiListHelper {
                 .eq(OutApiList::getStatus, 1);
         Collection<OutApiList> demands = outApiListMapper.selectList(queryWrapper);
         return demands.stream().map(OutApiListConvertor::translate).collect(Collectors.toList());
+    }
+
+    public OutApiListDTO queryByMatchName(String name) {
+        LambdaQueryWrapper<OutApiList> queryWrapper = new LambdaQueryWrapper<OutApiList>()
+                .eq(OutApiList::getStatus, 1)
+                .eq(OutApiList::getMatchName, name);
+        List<OutApiList> outApiLists = outApiListMapper.selectList(queryWrapper);
+        if (CollectionUtils.isEmpty(outApiLists)) {
+            return null;
+        }
+        return OutApiListConvertor.translate(outApiLists.get(0));
     }
 
 }

@@ -15,6 +15,7 @@ public class OutApiListConvertor {
         outApiListDTO.setLinkUrl(outApiList.getLinkUrl());
         outApiListDTO.setStatus(outApiList.getStatus());
         outApiListDTO.setCreateTime(outApiList.getCreateTime());
+        outApiListDTO.setLinkUrl(outApiList.getLinkUrl());
         return outApiListDTO;
     }
 }

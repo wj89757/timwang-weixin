@@ -1,7 +1,6 @@
 package com.timwang.weixin.zls.test.dao;
 
-import com.timwang.weixin.zls.dao.UserMapper;
-import com.timwang.weixin.zls.model.User;
+import com.timwang.weixin.zls.api.dao.OutApiListMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class UserMapperTest {
     @Autowired
-    private UserMapper userMapper;
+    private OutApiListMapper outApiListMapper;
 
     @Test
     public void insert_test() {
-        User user = new User();
-        user.setId(2);
-        user.setName("测试2");
-        int insert = userMapper.insert(user);
-        assert insert > 0;
+
     }
 }

@@ -1,19 +1,33 @@
-package com.timwang.weixin.zls.api.dto;
+package com.timwang.weixin.zls.api.vo;
+
+import cn.hutool.core.date.DateUtil;
+import com.timwang.weixin.zls.api.dto.OutApiListDTO;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author wangjun
- * @date 2020-06-20
+ * @date 2020-06-21
  */
-public class OutApiListDTO implements Serializable {
+public class OutApiListVO implements Serializable {
     private Integer id;
     private String name;
     private String matchName;
     private String linkUrl;
     private Integer status;
-    private Date createTime;
+    private String createTime;
+
+    public static OutApiListVO translate(OutApiListDTO outApiListDTO) {
+        OutApiListVO outApiListVO = new OutApiListVO();
+        outApiListVO.setId(outApiListDTO.getId());
+        outApiListVO.setName(outApiListDTO.getName());
+        outApiListVO.setMatchName(outApiListDTO.getMatchName());
+        outApiListVO.setLinkUrl(outApiListDTO.getLinkUrl());
+        outApiListVO.setStatus(outApiListDTO.getStatus());
+        outApiListVO.setCreateTime(DateUtil.formatTime(outApiListDTO.getCreateTime()));
+        return outApiListVO;
+    }
 
     public Integer getId() {
         return id;
@@ -55,11 +69,11 @@ public class OutApiListDTO implements Serializable {
         this.status = status;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 }

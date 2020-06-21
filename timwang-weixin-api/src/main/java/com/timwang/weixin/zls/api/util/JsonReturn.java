@@ -1,5 +1,7 @@
 package com.timwang.weixin.zls.api.util;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.Serializable;
 
 /**
@@ -93,8 +95,12 @@ public class JsonReturn implements Serializable {
     public static JsonReturn successInstance(Object data){
         JsonReturn jsonReturn = new JsonReturn();
         jsonReturn.setCode(SUCCESS);
-        jsonReturn.setData(data);
+        jsonReturn.setData(JsonUtils.toJson(data));
         return jsonReturn;
+    }
+
+    public boolean isSuccess() {
+        return StringUtils.isNotEmpty(this.code) && this.code.equals(SUCCESS);
     }
 
 

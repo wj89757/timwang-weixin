@@ -4,10 +4,19 @@ import com.foxinmy.weixin4j.cache.CacheStorager;
 import com.foxinmy.weixin4j.cache.FileCacheStorager;
 import com.foxinmy.weixin4j.model.WeixinAccount;
 import com.foxinmy.weixin4j.mp.WeixinProxy;
+import com.timwang.weixin.zls.web.handler.ApiListTextMessageHandler;
+import com.timwang.weixin.zls.web.handler.ChatMessageHandler;
+import com.timwang.weixin.zls.web.handler.CustomMessageHandler;
+import com.timwang.weixin.zls.web.handler.HelloMessageHandler;
+import com.timwang.weixin.zls.web.handler.SubscribeMessageHandler;
+import com.timwang.weixin.zls.web.handler.TextMessageHandler;
+import com.timwang.weixin.zls.web.handler.VoiceMessageHandler;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author wangjun
@@ -26,5 +35,46 @@ public class BeanConfig {
     public WeixinProxy weixinProxy() {
         WeixinAccount weixinAccount = new WeixinAccount(weixinId, aesKey);
         return new WeixinProxy(weixinAccount, new FileCacheStorager<>(token));
+    }
+
+    @Bean
+    public ApiListTextMessageHandler apiListTextMessageHandler() {
+        return new ApiListTextMessageHandler();
+    }
+
+    @Bean
+    public ChatMessageHandler chatMessageHandler() {
+        return new ChatMessageHandler();
+    }
+
+    @Bean
+    public CustomMessageHandler customMessageHandler() {
+        return new CustomMessageHandler();
+    }
+
+    @Bean
+    public HelloMessageHandler helloMessageHandler() {
+        return new HelloMessageHandler();
+    }
+
+    @Bean
+    public SubscribeMessageHandler subscribeMessageHandler() {
+        return new SubscribeMessageHandler();
+    }
+
+    @Bean
+    public TextMessageHandler textMessageHandler() {
+        return new TextMessageHandler();
+    }
+
+    @Bean
+    public VoiceMessageHandler voiceMessageHandler() {
+        return new VoiceMessageHandler();
+    }
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

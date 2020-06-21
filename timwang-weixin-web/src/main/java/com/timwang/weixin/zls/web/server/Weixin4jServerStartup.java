@@ -5,7 +5,16 @@ import com.foxinmy.weixin4j.logging.InternalLoggerFactory;
 import com.foxinmy.weixin4j.spring.SpringBeanFactory;
 import com.foxinmy.weixin4j.startup.WeixinServerBootstrap;
 import com.foxinmy.weixin4j.util.AesToken;
+import com.timwang.weixin.zls.web.config.BeanConfig;
+import com.timwang.weixin.zls.web.handler.ApiListTextMessageHandler;
+import com.timwang.weixin.zls.web.handler.ChatMessageHandler;
+import com.timwang.weixin.zls.web.handler.CustomMessageHandler;
+import com.timwang.weixin.zls.web.handler.HelloMessageHandler;
+import com.timwang.weixin.zls.web.handler.SubscribeMessageHandler;
+import com.timwang.weixin.zls.web.handler.TextMessageHandler;
+import com.timwang.weixin.zls.web.handler.VoiceMessageHandler;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -31,6 +40,20 @@ public class Weixin4jServerStartup implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
 
+	@Autowired
+	private ApiListTextMessageHandler apiListTextMessageHandler;
+	@Autowired
+	private ChatMessageHandler chatMessageHandler;
+	@Autowired
+	private CustomMessageHandler customMessageHandler;
+	@Autowired
+	private HelloMessageHandler helloMessageHandler;
+	@Autowired
+	private SubscribeMessageHandler subscribeMessageHandler;
+	@Autowired
+	private TextMessageHandler textMessageHandler;
+	@Autowired
+	private VoiceMessageHandler voiceMessageHandler;
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -48,8 +71,15 @@ public class Weixin4jServerStartup implements ApplicationContextAware {
 				try {
 						new WeixinServerBootstrap(aesToken)
 							.handlerPackagesToScan(handlerPackage)
-							.addHandler(DebugMessageHandler.global)
 							.resolveBeanFactory(new SpringBeanFactory(applicationContext))
+							.addHandler(DebugMessageHandler.global)
+							.addHandler(apiListTextMessageHandler)
+							.addHandler(chatMessageHandler)
+							.addHandler(customMessageHandler)
+							.addHandler(helloMessageHandler)
+							.addHandler(subscribeMessageHandler)
+							.addHandler(textMessageHandler)
+							.addHandler(voiceMessageHandler)
 							.openAlwaysResponse().startup(port);
 				} catch (Exception e) {
 					InternalLoggerFactory.getInstance(getClass()).error("weixin4j server startup:FAIL", e);

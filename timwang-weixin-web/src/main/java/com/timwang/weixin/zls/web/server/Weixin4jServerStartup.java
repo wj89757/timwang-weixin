@@ -1,45 +1,64 @@
 package com.timwang.weixin.zls.web.server;
 
 import com.foxinmy.weixin4j.handler.DebugMessageHandler;
+import com.foxinmy.weixin4j.logging.InternalLoggerFactory;
+import com.foxinmy.weixin4j.spring.SpringBeanFactory;
 import com.foxinmy.weixin4j.startup.WeixinServerBootstrap;
 import com.foxinmy.weixin4j.util.AesToken;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-/**
- * 微信消息服务:单独作为一个服务jar包启动，推荐这种方式去处理微信消息，可在本项目的根目录运行 `mvn package`得到一个可执行的zip包。
- *
- * @author tim.wang
- * @date 2015年5月7日
- * @since JDK 1.6
- */
-public final class Weixin4jServerStartup {
-	/**
-	 * 服务监听的端口号,目前微信只支持80端口,可以考虑用nginx做转发到此端口
-	 */
-	private static int port = 30000;
-	/**
-	 * 服务器token信息
-	 */
-	/**
-	 * 明文模式:String aesToken = ""; 密文模式:AesToken aesToken = new
-	 * AesToken("公众号appid", "公众号token","公众号加密/解密消息的密钥");
-	 */
-	private static String AES_TOKEN = "weixin";
-	/**
-	 * 处理微信消息的全限包名(也可通过addHandler方式一个一个添加)
-	 */
-	private static String HANDLER_PACKAGE = "com.timwang.weixin.zls.web.server.handler";
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-	/**
-	 * 入口函数 可使用assembly插件打成可执行zip包:https://github.com/foxinmy/weixin4j/wiki/
-	 * assembly%E6%89%93%E5%8C%85
-	 *
-	 * @param args
-	 */
-	public static void main(String[] args){
-		new WeixinServerBootstrap(new AesToken("wx0d7d983e3c4b1735", AES_TOKEN, "CILRMIWizRVfxkTIvSnlJYEooBy8DCE17GPs92LJWmr")) // 指定开发者token信息。
-				.handlerPackagesToScan(HANDLER_PACKAGE) // 扫描处理消息的包。
-				.addHandler(DebugMessageHandler.global) // 当没有匹配到消息处理时输出调试信息，开发环境打开。
-				.openAlwaysResponse() // 当没有匹配到消息处理时输出空白回复(公众号不会出现「该公众号无法提供服务的提示」)，正式环境打开。
-				.startup(port); // 绑定服务的端口号，即对外暴露(微信服务器URL地址)的服务端口。
+@Component
+public class Weixin4jServerStartup implements ApplicationContextAware {
+	@Value("${weixin4j.server.port}")
+	private int port;
+	@Value("${weixin4j.server.weixinId}")
+	private String weixinId;
+	@Value("${weixin4j.server.token}")
+	private String token;
+	@Value("${weixin4j.server.aesKey}")
+	private String aesKey;
+	@Value("${weixin4j.server.handlerPackage}")
+	private String handlerPackage;
+
+	private ApplicationContext applicationContext;
+
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+	}
+
+	private ExecutorService executor;
+
+	public void start() {
+		AesToken aesToken = new AesToken(weixinId, token, aesKey);
+		executor = Executors.newCachedThreadPool();
+		executor.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
+						new WeixinServerBootstrap(aesToken)
+							.handlerPackagesToScan(handlerPackage)
+							.addHandler(DebugMessageHandler.global)
+							.resolveBeanFactory(new SpringBeanFactory(applicationContext))
+							.openAlwaysResponse().startup(port);
+				} catch (Exception e) {
+					InternalLoggerFactory.getInstance(getClass()).error("weixin4j server startup:FAIL", e);
+				}
+			}
+		});
+	}
+
+	public void stop() {
+		executor.shutdown();
 	}
 }

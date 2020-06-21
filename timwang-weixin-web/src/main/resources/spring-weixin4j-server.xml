@@ -14,6 +14,6 @@ weixin4j-serve本身是作为一个单独的服务来启动的，可以不依赖
 	<!-- 详见：com.foxinmy.weixin4j.example.server.Weixin4jServerStartupListener和web.xml配置 -->
 
 	<!-- spring扫描加载消息处理类~start -->
-	<context:component-scan base-package="com.timwang.weixin.zls.server.handler" />
+	<context:component-scan base-package="com.timwang.weixin.zls.web.server.handler" />
 	<!-- spring扫描加载消息处理类~end -->
 </beans>

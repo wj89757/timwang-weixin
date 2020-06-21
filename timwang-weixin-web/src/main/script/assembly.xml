@@ -12,7 +12,12 @@
 			<includes>
 				<include>io.netty:netty-all</include>
 				<include>com.foxinmy:weixin4j-server</include>
-				<include>com.timwang:timwang-weixin</include>
+				<include>com.timwang:timwang-weixin-api</include>
+				<include>org.slf4j:slf4j-api</include>
+				<include>cn.hutool:hutool-all</include>
+				<include>org.apache.commons:commons-lang3</include>
+				<include>com.google.code.gson:gson</include>
+				<include>com.google.guava:guava</include>
 			</includes>
 			<useProjectArtifact>true</useProjectArtifact>
 			<outputDirectory>/lib</outputDirectory>

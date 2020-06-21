@@ -6,7 +6,7 @@ fi
 APP_HOME=$(cd "$(dirname "$0")"; pwd)
 
 #Main class
-APP_MAINCLASS=com.timwang.weixin.zls.server.Weixin4jServerStartup
+APP_MAINCLASS=com.timwang.weixin.zls.web.server.Weixin4jServerStartup
 
 #classpath
 CLASSPATH=$APP_HOME/classes

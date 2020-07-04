@@ -10,27 +10,17 @@
     </parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>timwang-weixin-web</artifactId>
+	<artifactId>timwang-weixin-util</artifactId>
 	<packaging>jar</packaging>
 
 	<build>
-		<finalName>timwang-weixin-web</finalName>
+		<finalName>timwang-weixin-util</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>com.timwang.weixin.zls.utils.WeixinWebApplication</mainClass>
-					<classifier>exec</classifier>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 
 	<dependencies>
@@ -43,6 +33,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${spring-boot-mybatis-version}</version>
+		</dependency>
 		<!-- Spring Boot End -->
 
 		<!-- Spring Cloud Begin -->
@@ -54,46 +54,38 @@
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
-			<scope>compile</scope>
-		</dependency>
 		<!-- Spring Cloud End -->
 
+		<!-- mysql begin -->
 		<dependency>
-			<groupId>com.timwang</groupId>
-			<artifactId>timwang-weixin-api</artifactId>
-			<version>${revision}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>mybatis-plus-boot-starter</artifactId>
-					<groupId>com.baomidou</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		<!-- 微信公众平台 -->
+		<!-- mysql end   -->
+
+		<!--spring-test测试=-->
 		<dependency>
-			<groupId>com.foxinmy</groupId>
-			<artifactId>weixin4j-mp</artifactId>
-			<version>${weixin4j.version}</version>
-		</dependency>
-		<!-- 微信被动消息(回调模式) -->
-		<dependency>
-			<groupId>com.foxinmy</groupId>
-			<artifactId>weixin4j-server</artifactId>
-			<version>${weixin4j.server.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>netty-all</artifactId>
-					<groupId>io.netty</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring-test.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-			<version>${netty.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+			<version>${spring-boot-test.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+		<!--spring-test测试=-->
+
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>${okhttp.version}</version>
+		</dependency>
+
 	</dependencies>
 </project>

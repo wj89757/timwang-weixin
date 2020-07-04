@@ -18,7 +18,9 @@
 
     <modules>
         <module>../timwang-weixin-api</module>
+        <module>../timwang-weixin-miniprogram</module>
         <module>../timwang-weixin-web</module>
+        <module>../timwang-weixin-util</module>
     </modules>
 
     <properties>

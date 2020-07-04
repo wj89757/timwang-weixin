@@ -99,6 +99,11 @@
             <version>${okhttp.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.timwang</groupId>
+            <artifactId>timwang-weixin-util</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
 </project>
